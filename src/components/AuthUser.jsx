@@ -8,7 +8,7 @@ const AuthUser = () => {
     return context.users?.token ? (
         <Outlet />
     ) : (
-        <Navigate to={'/login'} replace />
+        <Navigate to={'/posts'} replace />
     )
 }
 
