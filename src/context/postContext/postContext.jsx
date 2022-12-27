@@ -2,7 +2,7 @@ import axios from 'axios'
 import { createContext, useContext, useEffect, useState } from 'react'
 
 import AuthContext from '../auth/authContext'
-const BSAE_URL = 'https://dummyjson.com'
+const BASE_URL = 'https://dummyjson.com'
 
 const PostContext = createContext({
     fetchUserPost: () => {},
@@ -24,22 +24,25 @@ export const PostContextProvider = ({ children }) => {
     const [isError, setIsError] = useState('')
     const usersContext = useContext(AuthContext)
     const { users } = usersContext
+
+    const fetchUserPost = async () => {
+        const { data } = await axios.get(`${BASE_URL}/posts/user/${users?.id}`)
+        return data
+    }
+
     const onSearchChange = (e) => {
         setSearch(e.target.value)
-    }
-    const fetchUserPost = async () => {
-        const { data } = await axios.get(`${BSAE_URL}/posts/user/${users?.id}`)
-        return data
     }
 
     useEffect(() => {
         const getPost = async () => {
             setStatus('loading')
             try {
+                //res.data
                 const { data } = await axios.get(
                     result
-                        ? `${BSAE_URL}/posts/search?q=${result}`
-                        : `${BSAE_URL}/posts`
+                        ? `${BASE_URL}/posts/search?q=${result}`
+                        : `${BASE_URL}/posts`
                 )
                 if (data) {
                     setPosts(data.posts)
@@ -53,6 +56,7 @@ export const PostContextProvider = ({ children }) => {
         }
         getPost()
     }, [result])
+
     setTimeout(() => {
         if (posts.length === 0) {
             setResult('')
@@ -68,13 +72,13 @@ export const PostContextProvider = ({ children }) => {
 
     // Get Single User
     const fetchPost = async (postId) => {
-        const { data } = await axios.get(`${BSAE_URL}/posts/${postId}`)
+        const { data } = await axios.get(`${BASE_URL}/posts/${postId}`)
         return data
     }
 
     // Get Comment
     const fetchPostCommentById = async (postId) => {
-        const { data } = await axios.get(`${BSAE_URL}/comments/post/${postId}`)
+        const { data } = await axios.get(`${BASE_URL}/comments/post/${postId}`)
         return data
     }
 

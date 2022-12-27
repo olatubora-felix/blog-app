@@ -3,16 +3,16 @@ import PostItems from '../components/posts/PostItems'
 import PostContext from '../context/postContext/postContext'
 
 import Search from '../components/search/Search'
-import Loading from '../components/loading/Loading'
+import Message from '../components/UI/Message'
 
 const Posts = () => {
     const postsContext = useContext(PostContext)
     const { posts, isError, status } = postsContext
     if (status === 'loading') {
-        return <Loading />
+        return <Message message={'Loading...'} className="text-blue-600" />
     }
     if (isError) {
-        return <h1>{isError.message}</h1>
+        return <Message message={isError} className="text-red-500" />
     }
 
     return (

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { useQuery } from 'react-query'
 import PostContext from '../../context/postContext/postContext'
-import Loading from '../loading/Loading'
+import Message from '../UI/Message'
 
 const Comments = ({ postId }) => {
     const postContext = useContext(PostContext)
@@ -11,7 +11,7 @@ const Comments = ({ postId }) => {
     )
 
     if (status === 'loading') {
-        return <Loading />
+        return <Message className={'text-blue-600'} message="Loading..." />
     }
 
     if (status === 'error') {

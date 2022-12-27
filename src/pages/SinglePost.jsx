@@ -2,10 +2,10 @@ import React, { useContext } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import PostContext from '../context/postContext/postContext'
 import { useQuery } from 'react-query'
-import Loading from '../components/loading/Loading'
 import AuthContext from '../context/auth/authContext'
 import Comments from '../components/posts/Comments'
 import { Button } from '@material-tailwind/react'
+import Message from '../components/UI/Message'
 
 const SinglePost = () => {
     const { postId } = useParams()
@@ -22,11 +22,11 @@ const SinglePost = () => {
     // console.log(data)
 
     if (status === 'loading') {
-        return <Loading />
+        return <Message message={'Loading'} className="text-blue-600" />
     }
 
     if (status === 'error') {
-        return <h2>{isError.message}</h2>
+        return <Message className={'text-red-500'} message={isError} />
     }
     return (
         <main className="mx-auto container py-6 px-4">

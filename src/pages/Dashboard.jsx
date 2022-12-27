@@ -2,8 +2,8 @@ import { useContext } from 'react'
 import PostItems from '../components/posts/PostItems'
 import PostContext from '../context/postContext/postContext'
 import { useQuery } from 'react-query'
-import Loading from '../components/loading/Loading'
 import AuthContext from '../context/auth/authContext'
+import Message from '../components/UI/Message'
 
 const Dashboard = () => {
     const postContext = useContext(PostContext)
@@ -11,13 +11,14 @@ const Dashboard = () => {
     const usersContext = useContext(AuthContext)
     const { users } = usersContext
 
-    const { status, data, isError } = useQuery(['usersPost'], () =>
+    const { status, data, isError } = useQuery(['allPost'], () =>
         fetchUserPost()
     )
+
     let content
 
     if (status === 'loading') {
-        return <Loading />
+        return <Message className={'text-blue-600'} message="Loading" />
     } else if (status === 'success') {
         content = (
             <div className=" grid md:grid-cols-3 grid-cols-1 gap-4">
@@ -32,7 +33,7 @@ const Dashboard = () => {
     }
     return (
         <main className="mx-auto container py-6  px-4">
-            <h2 className=" text-right text-3xl my-4 text-blue-500 font-semibold">
+            <h2 className=" text-right text-3xl  text-blue-500 font-semibold">
                 {users?.username}
             </h2>
             {content}
